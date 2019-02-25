@@ -1,5 +1,5 @@
 import Phaser from "phaser";
-import DungeonScene from "./dungeon-scene.js";
+import FirstDungeon from "./first-dungeon-scene.js";
 
 const config = {
   type: Phaser.AUTO,
@@ -8,7 +8,7 @@ const config = {
   backgroundColor: "#000",
   parent: "game-container",
   pixelArt: true,
-  scene: DungeonScene,
+  scene: FirstDungeon,
   input: {
     keyboard: true,
     mouse: true,
@@ -18,7 +18,9 @@ const config = {
   physics: {
     default: "arcade",
     arcade: {
-      gravity: { y: 0 },
+      gravity: {
+        y: 0
+      },
       debug: true
     }
   }

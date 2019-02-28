@@ -1,10 +1,13 @@
+// Developed by Toki Lee
+
 import Phaser from "phaser";
+import PhaserNaveMeshPlugin from "phaser-navmesh";
 import FirstDungeon from "./first-dungeon-scene.js";
 
 const config = {
   type: Phaser.AUTO,
-  width: 800,
-  height: 600,
+  width: 816,
+  height: 624,
   backgroundColor: "#000",
   parent: "game-container",
   pixelArt: true,
@@ -14,6 +17,14 @@ const config = {
     mouse: true,
     touch: false,
     gamepad: false
+  },
+  plugins: {
+    scene: [{
+      key: "PhaserNavMeshPlugin",
+      plugin: PhaserNaveMeshPlugin,
+      mapping: "navMeshPlugin",
+      start: true
+    }]
   },
   physics: {
     default: "arcade",

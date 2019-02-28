@@ -1,6 +1,7 @@
 export default class Unit {
-    constructor(scene, x, y) {
+    constructor(scene, x, y, navMesh) {
         this.scene = scene;
+        this.navMesh = navMesh;
 
         this.sprite = scene.physics.add
             .sprite(x, y, "characters", 0)
@@ -24,28 +25,37 @@ export default class Unit {
             x: this.sprite.x,
             y: this.sprite.y
         };
+        this.path;
+
+        this.i = 0;
     }
 
     update() {
-        if (this.isMoving === true) {
-            this.scene.physics.moveTo(this.sprite, this.destination.x, this.destination.y, 200);
-        }
 
-        if (this.checkDistance) {
-            if ((this.sprite.x <= this.destination.x + 2 && this.sprite.x >= this.destination.x - 2) &&
-                (this.sprite.y <= this.destination.y + 2 && this.sprite.y >= this.destination.y - 2)) {
-                this.isMoving = false;
-                this.checkDistance = false;
-                this.sprite.body.setVelocity(0, 0);
+        if (this.isMoving) {
+            this.scene.physics.moveTo(this.sprite, this.path[this.i].x, this.path[this.i].y, 200);
+            if (this.checkDistance) {
+                if ((this.sprite.x <= this.path[this.i].x + 3 && this.sprite.x >= this.path[this.i].x - 3) &&
+                    (this.sprite.y <= this.path[this.i].y + 3 && this.sprite.y >= this.path[this.i].y - 3)) {
+                    if (this.i === this.path.length - 1) {
+                        this.isMoving = false;
+                        this.checkDistance = false;
+                        this.i = 0;
+                        this.sprite.body.setVelocity(0, 0);
+                    } else {
+                        this.i++;
+                    }
+                }
             }
         }
+
     }
 
-    move(x, y) {
+    move(path) {
         this.isMoving = true;
         this.checkDistance = true;
-        this.destination.x = x;
-        this.destination.y = y;
+        this.path = path;
+        this.i = 0;
     }
 
     leftClicked() {
